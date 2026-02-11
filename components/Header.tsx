@@ -15,7 +15,7 @@ const handleLogout = async () => {
 
 export default function Header() {
     return (
-        <header className="fixed top-0 left-0 z-50 w-full bg-white px-3  shadow-sm mb-4 dark:bg-gray-800">
+        <header className="fixed top-0 left-0 z-50 w-full bg-white px-3  shadow-sm mb-4 dark:bg-gray-900">
             <div className="mx-auto max-w-7xl px-4 py-4 flex justify-between items-center">
                 <Link href="/dashboard/notes" className="text-xl font-bold text-indigo-600">
                     AI Notes App

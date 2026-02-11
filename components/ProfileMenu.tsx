@@ -54,7 +54,7 @@ export default function ProfileMenu() {
                             setOpen(false);
                             router.push("/profile");
                         }}
-                        className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 hover:text-black   rounded-xl cursor-pointer"
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800  rounded-xl cursor-pointer"
                     >
                         <User size={16} />
                         My Profile
@@ -62,7 +62,7 @@ export default function ProfileMenu() {
 
                     <button 
                         onClick={() => setShowConfirm(true)}
-                        className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-xl cursor-pointer"
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-gray-100  dark:hover:bg-gray-800 rounded-xl cursor-pointer"
                     >
                         <LogOut size={16} />
                         Logout
@@ -71,8 +71,8 @@ export default function ProfileMenu() {
                 </div>
             )}
             {showConfirm && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-                    <div className="w-120  rounded-xl bg-white p-6 shadow-lg">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40  dark:text-gray-200">
+                    <div className="w-120  rounded-xl bg-white  dark:bg-gray-900 p-6 shadow-lg">
                         <h3 className="text-lg font-semibold mb-2">Confirm Logout</h3>
                         <p className="text-sm text-gray-600 mb-4">
                             Are you sure you want to logout?
@@ -81,14 +81,14 @@ export default function ProfileMenu() {
                         <div className="flex justify-end gap-3">
                             <button
                                 onClick={() => setShowConfirm(false)}
-                                className="rounded-lg px-4 py-2 text-sm border hover:bg-gray-100"
+                                className="rounded-lg px-4 py-2 cursor-pointer bg-gray-300 dark:bg-gray-900 text-sm border hover:bg-gray-300  dark:hover:bg-gray-800"
                             >
                                 Cancel
                             </button>
 
                             <button
                                 onClick={handleLogout}
-                                className="rounded-lg px-4 py-2 text-sm bg-red-600 text-white hover:bg-red-700"
+                                className="rounded-lg px-4 py-2 cursor-pointer text-sm bg-red-600 text-white hover:bg-red-700"
                             >
                                 Logout
                             </button>

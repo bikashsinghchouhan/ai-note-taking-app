@@ -25,7 +25,7 @@ export default function NoteCard({ note, onDelete }: any) {
     return (
         <>
             {/* CARD */}
-            <Card className="relative hover:shadow-md transition dark:bg-gray-600 ">
+            <Card className="relative hover:shadow-md transition dark:bg-gray-900 ">
                 <Link href={`/dashboard/notes/${note._id}`}>
                     <CardContent className="p-4 space-y-2 cursor-pointer ">
                         <h3 className="font-semibold text-lg">{note.title}</h3>
@@ -62,8 +62,8 @@ export default function NoteCard({ note, onDelete }: any) {
 
             {/* DELETE CONFIRMATION MODAL */}
             {showConfirm && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-                    <div className="w-80 rounded-xl bg-white p-6 shadow-lg">
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 ">
+                    <div className="w-80 rounded-xl bg-white dark:bg-gray-900 p-6 shadow-lg">
                         <h3 className="text-lg font-semibold mb-2">
                             Delete Note
                         </h3>
@@ -74,14 +74,14 @@ export default function NoteCard({ note, onDelete }: any) {
                         <div className="flex justify-end gap-3">
                             <button
                                 onClick={() => setShowConfirm(false)}
-                                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-100"
+                                className="rounded-lg border px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-800"
                             >
                                 Cancel
                             </button>
 
                             <button
                                 onClick={handleDelete}
-                                className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                                className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer dark:hover:bg-red-800"
                             >
                                 Delete
                             </button>

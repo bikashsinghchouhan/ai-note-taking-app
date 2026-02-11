@@ -4,6 +4,11 @@ import { Toaster } from "react-hot-toast";
 export const metadata = {
   title: "AI Notes",
   description: "AI Powered Notes App",
+icons: {
+  icon: "/pencil.png",
+  
+},
+
 };
 
 export default function RootLayout({

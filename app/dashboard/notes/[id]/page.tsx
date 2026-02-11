@@ -89,7 +89,7 @@ export default function NoteDetailPage() {
         </div>
 
         {/* NOTE CONTENT */}
-        <div className="bg-white rounded-xl border p-4 shadow-sm dark:bg-gray-600">
+        <div className="bg-white rounded-xl border p-4 shadow-sm dark:bg-gray-900">
           <p className="whitespace-pre-line text-gray-700 dark:text-gray-100 leading-relaxed">
             {note.content}
           </p>
@@ -112,30 +112,30 @@ export default function NoteDetailPage() {
         <div className="space-y-6">
 
           {summary && (
-            <div className="rounded-xl border bg-blue-50 p-6">
-              <h3 className="mb-2 text-lg font-semibold text-blue-800">
+            <div className="rounded-xl border bg-blue-50 p-6 dark:bg-gray-900">
+              <h3 className="mb-2 text-lg font-semibold text-blue-600">
                 AI Summary
               </h3>
-              <p className="text-blue-900 leading-relaxed">
+              <p className="text-blue-700 leading-relaxed">
                 {summary}
               </p>
             </div>
           )}
 
           {improved && (
-            <div className="rounded-xl border bg-green-50 p-6">
-              <h3 className="mb-2 text-lg font-semibold text-green-800">
+            <div className="rounded-xl border bg-green-50 p-6  dark:bg-gray-900">
+              <h3 className="mb-2 text-lg font-semibold text-green-600">
                 Improved Version
               </h3>
-              <p className="text-green-900 leading-relaxed">
+              <p className="text-green-700 leading-relaxed">
                 {improved}
               </p>
             </div>
           )}
 
           {tags.length > 0 && (
-            <div className="rounded-xl border bg-purple-50 p-6">
-              <h3 className="mb-3 text-lg font-semibold text-purple-800">
+            <div className="rounded-xl border bg-purple-50 p-6 dark:bg-gray-900">
+              <h3 className="mb-3 text-lg font-semibold text-purple-600">
                 Suggested Tags
               </h3>
               <div className="flex flex-wrap gap-2">

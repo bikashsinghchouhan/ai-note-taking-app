@@ -65,7 +65,7 @@ export default function NotesPage() {
                         onChange={(e) => setSearch(e.target.value)}
                         className="border rounded-lg px-2 md:px-4 py-2 w-56 "
                     />
-                    <div>
+                    <div className="cursor-pointer">
                         <Link href="/dashboard/notes/new">
                             <Button>Create Note</Button>
                         </Link>
