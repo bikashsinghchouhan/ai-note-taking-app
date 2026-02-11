@@ -86,6 +86,8 @@ app/
 components/
 lib/
 server/models/
+types/
+middlewares
 ```
 
 ---

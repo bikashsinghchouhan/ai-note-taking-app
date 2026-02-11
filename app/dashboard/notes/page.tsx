@@ -17,17 +17,7 @@ export default function NotesPage() {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
 
-    // useEffect(() => {
-    //     fetch("/api/notes", {
-    //         credentials: "include",
-    //     })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setNotes(data);
-    //             setLoading(false);
-    //         })
-    //         .catch(() => setLoading(false));
-    // }, []);
+
     useEffect(() => {
         async function fetchNotes() {
             try {
@@ -37,8 +27,8 @@ export default function NotesPage() {
 
                 const data = await res.json();
 
-                console.log("STATUS:", res.status);
-                console.log("DATA:", data);
+                // console.log("STATUS:", res.status);
+                // console.log("DATA:", data);
 
                 if (!res.ok) {
                     console.error("Server Error:", data);
@@ -62,7 +52,7 @@ export default function NotesPage() {
 
     return (
         <div className="space-y-6 pt-16">
-           
+
             {/* Search Input */}
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                 <h1 className="text-2xl font-bold whitespace-nowrap">My Notes</h1>
@@ -75,17 +65,37 @@ export default function NotesPage() {
                         onChange={(e) => setSearch(e.target.value)}
                         className="border rounded-lg px-2 md:px-4 py-2 w-56 "
                     />
-                   <div>
-                    <Link href="/dashboard/notes/new">
-                        <Button>Create Note</Button>
-                    </Link>
+                    <div>
+                        <Link href="/dashboard/notes/new">
+                            <Button>Create Note</Button>
+                        </Link>
                     </div>
                 </div>
             </div>
 
 
             {notes.length === 0 ? (
-                <p className="text-gray-500">No notes yet.</p>
+                <div className="flex items-center justify-center py-16">
+                    <div className="w-full max-w-md rounded-2xl border bg-white dark:bg-gray-900 shadow-sm p-8 text-center space-y-4">
+
+                        <div className="flex items-center justify-center text-5xl">
+                            📒
+                        </div>
+
+                        <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                            No Notes Yet
+                        </h2>
+
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            You haven’t created any notes yet.
+                        </p>
+
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Click <span className="font-medium text-indigo-600">Create Note</span> to get started.
+                        </p>
+
+                    </div>
+                </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {notes
