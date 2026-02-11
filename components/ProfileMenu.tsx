@@ -42,27 +42,27 @@ export default function ProfileMenu() {
         <div ref={menuRef} className="relative">
             <button
                 onClick={() => setOpen(!open)}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-white cursor-pointer"
             >
                 <UserCircle />
             </button>
 
             {open && (
-                <div className="absolute right-0 mt-2 w-44 rounded-xl bg-white shadow-lg border p-4">
+                <div className="absolute right-0 mt-2 w-44 rounded-xl bg-white dark:bg-gray-900 dark:text-white shadow-lg border p-4">
                     <button
                         onClick={() => {
                             setOpen(false);
                             router.push("/profile");
                         }}
-                        className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 rounded-xl"
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100 hover:text-black   rounded-xl cursor-pointer"
                     >
                         <User size={16} />
                         My Profile
                     </button>
 
-                    <button
+                    <button 
                         onClick={() => setShowConfirm(true)}
-                        className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-xl"
+                        className="flex w-full items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-xl cursor-pointer"
                     >
                         <LogOut size={16} />
                         Logout

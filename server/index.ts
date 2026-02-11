@@ -1,55 +1,14 @@
 import { Hono } from "hono";
 import { connectDB } from "@/lib/db";
 import { getServerSession } from "next-auth";
-import Note from "./models/note.model";
 import { authOptions } from "@/lib/auth";
+import Note from "@/server/models/note.model";
+
 const app = new Hono();
 
-/**
- * Get all notes for a user
- */
-app.get("/notes/:userId", async (c) => {
-  await connectDB();
-
-  const userId = c.req.param("userId");
-  const notes = await Note.find({ userId }).sort({ createdAt: -1 });
-
-  return c.json(notes);
-});
-
-/**
- * Create a note
- */
-app.post("/notes", async (c) => {
-const session = await getServerSession(authOptions);
-
-if (!session?.user?.id) {
-  return c.json({ message: "Unauthorized" }, 401);
-}
-
-const userId = session.user.id; // ✅ NO TS error
-
-
-  await connectDB();
-
-  const { title, content } = await c.req.json();
-
-  if (!title || !content) {
-    return c.json({ message: "Missing fields" }, 400);
-  }
-
-  const note = await Note.create({
-    title,
-    content,
-    userId: session.user.id, // 👈 from session
-  });
-
-  return c.json(note, 201);
-});
-
-/**
- * Get my notes (SECURE)
- */
+/* =============================
+   GET MY NOTES
+============================= */
 app.get("/notes", async (c) => {
   const session = await getServerSession(authOptions);
 
@@ -59,38 +18,95 @@ app.get("/notes", async (c) => {
 
   await connectDB();
 
-  const notes = await Note.find({ userId: session.user.id }).sort({
-    createdAt: -1,
-  });
+  const notes = await Note.find({
+    userId: session.user.id,
+  }).sort({ createdAt: -1 });
 
   return c.json(notes);
 });
 
+/* =============================
+   CREATE NOTE
+============================= */
+app.post("/notes", async (c) => {
+  const session = await getServerSession(authOptions);
 
-/**
- * Update note
- */
-app.put("/note/:id", async (c) => {
+  if (!session?.user?.id) {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+
+  const { title, content } = await c.req.json();
+
+  if (!title || !content) {
+    return c.json({ message: "Missing fields" }, 400);
+  }
+
   await connectDB();
 
-  const id = c.req.param("id");
-  const data = await c.req.json();
+  const note = await Note.create({
+    title,
+    content,
+    userId: session.user.id,
+  });
 
-  const note = await Note.findByIdAndUpdate(id, data, { new: true });
-
-  return c.json(note);
+  return c.json(note, 201);
 });
 
-/**
- * Delete note
- */
-app.delete("/note/:id", async (c) => {
-  await connectDB();
+/* =============================
+   UPDATE NOTE
+============================= */
+app.put("/notes/:id", async (c) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
 
   const id = c.req.param("id");
-  await Note.findByIdAndDelete(id);
+  const { title, content } = await c.req.json();
 
-  return c.json({ message: "Note deleted" });
+  await connectDB();
+
+  const updated = await Note.findOneAndUpdate(
+    {
+      _id: id,
+      userId: session.user.id,
+    },
+    { title, content },
+    { new: true }
+  );
+
+  if (!updated) {
+    return c.json({ message: "Note not found" }, 404);
+  }
+
+  return c.json(updated);
+});
+
+/* =============================
+   DELETE NOTE
+============================= */
+app.delete("/notes/:id", async (c) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+
+  const id = c.req.param("id");
+
+  await connectDB();
+
+  const deleted = await Note.findOneAndDelete({
+    _id: id,
+    userId: session.user.id,
+  });
+
+  if (!deleted) {
+    return c.json({ message: "Note not found" }, 404);
+  }
+
+  return c.json({ message: "Deleted successfully" });
 });
 
 export default app;

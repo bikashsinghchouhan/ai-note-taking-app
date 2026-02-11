@@ -2,6 +2,33 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+
+@import "tailwindcss";
+
+/* Smooth transition */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light theme */
+html {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* Dark theme */
+html.dark {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+/* Make body inherit */
+body {
+  min-height: 100vh;
+  background: inherit;
+  color: inherit;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -136,4 +163,14 @@
 .input {
   @apply w-full rounded-lg border border-gray-300 px-4 py-2 text-sm
     focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-100 text-gray-900;
+  }
+
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
 }

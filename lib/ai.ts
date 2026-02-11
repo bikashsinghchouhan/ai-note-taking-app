@@ -15,7 +15,8 @@ export async function runAI(
 You are an assistant that summarizes notes.
 
 If the input text is short, rewrite it as a concise summary.
-If the input text is long, summarize it in 3–4 lines.
+If the input text is long, summarize it in 3-4 lines.
+and start from the next line 
 
 Text:
 ${content}

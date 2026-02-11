@@ -12,9 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="bg-gray-50 text-gray-900">
-        <Toaster position="top-right" />
+    <html lang="en" suppressHydrationWarning >
+      <body className="bg-gray-50 text-gray-900 dark:text-white dark:bg-gray-900">
+        
+        <Toaster position="top-center" />
         {children}
       </body>
     </html>

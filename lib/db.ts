@@ -1,13 +1,28 @@
 import mongoose from "mongoose";
 
+const MONGODB_URI = process.env.MONGODB_URI!;
+
+if (!MONGODB_URI) {
+  throw new Error("Please define MONGODB_URI in .env.local");
+}
+
+let isConnected = false;
+
 export async function connectDB() {
+  if (isConnected) {
+    return;
+  }
+
   try {
-    const uri = process.env.MONGODB_URI!;
     console.log("🔌 Connecting to MongoDB...");
-    await mongoose.connect(uri);
+
+    await mongoose.connect(MONGODB_URI);
+
+    isConnected = true;
+
     console.log("✅ MongoDB connected");
   } catch (error) {
-    console.error("❌ MongoDB error:", error);
+    console.error("❌ MongoDB connection failed:", error);
     throw error;
   }
 }

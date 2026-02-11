@@ -1,36 +1,231 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 AI Note-Taking App
 
-## Getting Started
+A full-stack AI-powered note-taking application built using Next.js (App Router), Hono.js, MongoDB, and Groq LLM.
 
-First, run the development server:
+This project demonstrates authentication, protected routing, secure user-based data isolation, AI integration, and modern UI/UX practices.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Live Features
+
+- 🔐 Authentication (NextAuth - Credentials)
+- 📝 Create, Edit, Delete Notes
+- 🔍 Search Notes by Title
+- 🤖 AI Summary (short & long text handling)
+- ✨ AI Improve (grammar & clarity enhancement)
+- 🏷 AI Tag Generation (exact 5 clean tags)
+- 👤 Profile Management (Editable user info)
+- 🌙 Dark / Light Theme Toggle
+- 🔒 User-specific notes isolation
+- ⚡ Responsive UI (Mobile + Desktop)
+
+---
+
+## 🏗 Tech Stack
+
+### Frontend
+- Next.js 14 (App Router)
+- TypeScript (strict mode)
+- Tailwind CSS
+- shadcn/ui
+- React Hook Form
+
+### Backend
+- Hono.js (API Layer)
+- MongoDB (Mongoose)
+- NextAuth (JWT Session Strategy)
+
+### AI Integration
+- Groq LLM (Llama 3.1 Instant Model)
+
+---
+
+## 🧠 Architecture Overview
+
+Frontend → API Layer (Hono) → MongoDB  
+                      ↓  
+                      Groq AI  
+
+- Authentication handled via NextAuth (JWT)
+- Each API route verifies session
+- Notes filtered using `userId`
+- AI handled server-side for security
+- Secure CRUD operations using user-based queries
+
+---
+
+## 🔐 Security Implementation
+
+- Password hashing with bcrypt
+- Session-based authorization
+- Protected dashboard layout
+- Secure update/delete queries:
+  
+```
+findOneAndUpdate({ _id: id, userId: session.user.id })
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Users cannot access other users' notes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📂 Project Structure
 
-## Learn More
+```
+app/
+ ├── (auth)/login
+ ├── (auth)/register
+ ├── dashboard/
+ │    └── notes/
+ ├── profile/
+ └── api/
+      ├── auth/
+      ├── profile/
+      └── [...hono]/route.ts
 
-To learn more about Next.js, take a look at the following resources:
+components/
+lib/
+server/models/
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤖 AI Prompt Design
 
-## Deploy on Vercel
+### Summary Logic
+- Short input → rewritten concisely
+- Long input → summarized in 3–4 lines
+- Clean structured output
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Tag Generation Rules
+- Exactly 5 tags
+- Comma-separated
+- No numbering
+- No hashtags
+- No explanations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🛠 How To Run Locally
+
+### 1️⃣ Install Dependencies
+
+```
+npm install
+```
+
+### 2️⃣ Create Environment File
+
+Create `.env.local`:
+
+```
+MONGODB_URI=your_mongodb_connection_string
+NEXTAUTH_SECRET=your_secret
+GROQ_API_KEY=your_groq_api_key
+NEXTAUTH_URL=http://localhost:3000
+```
+
+### 3️⃣ Run Development Server
+
+```
+npm run dev
+```
+
+Visit:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 🗄 Database Schema
+
+### User Model
+
+- name
+- email
+- password
+- bio
+- phone
+- location
+- avatar
+
+### Note Model
+
+- title
+- content
+- userId
+- createdAt
+- updatedAt
+
+---
+
+## 🌙 Theme System
+
+Tailwind dark mode using:
+
+```
+<html class="dark">
+```
+
+Global theme toggle modifies HTML class dynamically.
+
+---
+
+## 📦 Production Build
+
+```
+npm run build
+npm start
+```
+
+---
+
+## 🌍 Deployment
+
+Deployed via Vercel with environment variables configured in dashboard.
+
+---
+
+## 🎯 Key Design Decisions
+
+- Used Hono for lightweight API routing
+- JWT session strategy for scalability
+- Server-side AI calls for security
+- Strict TypeScript for reliability
+- Clean separation of concerns
+- Reusable UI components
+
+---
+
+## 👨‍💻 Developer
+
+Bikash Kumar Singh  
+  
+
+---
+
+## 💡 Future Enhancements
+
+- Rich Text Editor
+- AI Auto-Suggest While Typing
+- Notes Sharing
+- AI Note Categorization
+- Image Upload Support
+- Rate limiting for AI usage
+
+---
+
+## 🏁 Conclusion
+
+This project demonstrates full-stack development capability with:
+
+- Secure authentication
+- Database modeling
+- RESTful APIs
+- AI integration
+- Clean UI/UX
+- User isolation & authorization
+- Production-ready architecture
+

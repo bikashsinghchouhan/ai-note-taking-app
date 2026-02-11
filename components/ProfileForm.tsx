@@ -6,9 +6,11 @@ import toast from "react-hot-toast";
 export default function ProfileForm({
   user,
   onCancel,
+  onSuccess,
 }: {
   user: any;
   onCancel: () => void;
+  onSuccess: (updatedUser: any) => void;
 }) {
   const [name, setName] = useState(user.name || "");
   const [bio, setBio] = useState(user.bio || "");
@@ -17,44 +19,76 @@ export default function ProfileForm({
   const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const res = await fetch("/api/profile", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, bio, phone, location }),
-    });
+      const res = await fetch("/api/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, bio, phone, location }),
+      });
 
-    setLoading(false);
+      const data = await res.json();
 
-    if (res.ok) {
+      if (!res.ok) {
+        throw new Error(data.message || "Update failed");
+      }
+
       toast.success("Profile updated successfully ✅");
-      window.location.reload(); // refresh to show updated values
-    } else {
-      toast.error("Failed to update profile ❌");
+
+      onSuccess(data);   // 🔥 update parent instantly
+
+    } catch (error: any) {
+      toast.error(error.message || "Something went wrong ❌");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="rounded-xl bg-white p-6 shadow-md space-y-4">
+    <div className="rounded-xl bg-white dark:bg-gray-700 p-6 shadow-md space-y-4 border">
 
-      <input placeholder="Enter Name" className="input" value={name} onChange={e => setName(e.target.value)} />
-      <textarea placeholder="Enter Bio" className="input" rows={3} value={bio} onChange={e => setBio(e.target.value)} />
-      <input placeholder="Enter Phone Number" className="input" value={phone} onChange={e => setPhone(e.target.value)} />
-      <input placeholder="Current Location" className="input" value={location} onChange={e => setLocation(e.target.value)} />
+      <input
+        className="w-full rounded-lg border px-4 py-2"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Full Name"
+      />
 
-      <div className="flex gap-3">
+      <textarea
+        className="w-full rounded-lg border px-4 py-2"
+        rows={3}
+        value={bio}
+        onChange={(e) => setBio(e.target.value)}
+        placeholder="Bio"
+      />
+
+      <input
+        className="w-full rounded-lg border px-4 py-2"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        placeholder="Phone Number"
+      />
+
+      <input
+        className="w-full rounded-lg border px-4 py-2"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        placeholder="Location"
+      />
+
+      <div className="flex gap-3 pt-2">
         <button
           onClick={handleSave}
           disabled={loading}
-          className="rounded-lg bg-indigo-600 px-6 py-2 text-white"
+          className="rounded-lg bg-indigo-600 px-6 py-2 text-white cursor-pointer hover:bg-indigo-700 disabled:opacity-50"
         >
           {loading ? "Saving..." : "Save"}
         </button>
 
         <button
           onClick={onCancel}
-          className="rounded-lg border px-6 py-2"
+          className="rounded-lg border px-6 py-2 hover:bg-gray-50 dark:hover:bg-gray-500  cursor-pointer"
         >
           Cancel
         </button>
