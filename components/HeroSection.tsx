@@ -7,14 +7,17 @@ export default function HeroSection() {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen flex-col justify-between px-6 pt-24 pb-6 text-center">
-      
-      {/* Center Content */}
-      <div className="flex flex-col items-center justify-center flex-1">
-        <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+    <div className="flex min-h-screen flex-col justify-between dark:bg-gray-900">
+
+      {/* 🔹 Top Title Section (Header Position) */}
+      <div className="w-full  border-b py-5">
+        <h1 className="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">
           AI Note-Taking App
         </h1>
+      </div>
 
+      {/* 🔹 Center Content */}
+      <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
         <p className="mb-8 max-w-2xl text-lg text-gray-600 dark:text-gray-400">
           Write smarter notes, summarize instantly, improve content, and generate tags using AI.
         </p>
@@ -29,8 +32,8 @@ export default function HeroSection() {
         </button>
       </div>
 
-      {/* Footer */}
-      <footer className="mt-10 border-t pt-4 text-sm text-gray-500 dark:text-gray-400">
+      {/* 🔹 Footer */}
+      <footer className="border-t py-4 text-center text-sm text-gray-500 dark:text-gray-400">
         <p>
           Developed by{" "}
           <span className="font-semibold text-indigo-600 dark:text-indigo-400">
@@ -38,7 +41,7 @@ export default function HeroSection() {
           </span>{" "}
           • Contact:{" "}
           <a
-            href="mailto:your-email@gmail.com"
+            href="mailto:bikashkrsin2@gmail.com"
             className="underline hover:text-indigo-600 dark:hover:text-indigo-400"
           >
             bikashkrsin2@gmail.com

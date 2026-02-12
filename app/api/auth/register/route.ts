@@ -14,6 +14,13 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+    if (password.length < 6) {
+      return NextResponse.json(
+        { message: "Password must be at least 6 characters" },
+        { status: 400 }
+      );
+    }
+
 
     await connectDB();
 
