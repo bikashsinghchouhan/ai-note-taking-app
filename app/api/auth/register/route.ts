@@ -17,11 +17,13 @@ export async function POST(req: Request) {
 
     await connectDB();
 
+    // ✅ Check duplicate email
     const existingUser = await User.findOne({ email });
+
     if (existingUser) {
       return NextResponse.json(
-        { message: "User already exists" },
-        { status: 400 }
+        { message: "Email already registered. Try another email." },
+        { status: 409 } // better status code
       );
     }
 
@@ -37,7 +39,18 @@ export async function POST(req: Request) {
       { message: "User registered successfully" },
       { status: 201 }
     );
-  } catch (error) {
+
+  } catch (error: any) {
+    console.error("REGISTER ERROR:", error);
+
+    // Extra safety for duplicate key
+    if (error.code === 11000) {
+      return NextResponse.json(
+        { message: "Email already exists" },
+        { status: 409 }
+      );
+    }
+
     return NextResponse.json(
       { message: "Registration failed" },
       { status: 500 }

@@ -24,7 +24,7 @@ export default async function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
-      <h1 className="mb-6 text-3xl font-bold">
+      <h1 className="flex justify-center mb-6 text-3xl font-bold">
         My Profile
       </h1>
 

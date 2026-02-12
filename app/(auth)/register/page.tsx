@@ -13,27 +13,15 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-//   const handleRegister = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     setLoading(true);
 
-//     const res = await fetch("/api/auth/register", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ name, email, password }),
-//     });
-
-//     setLoading(false);
-
-//     if (res.ok) {
-//       router.push("/login");
-//     } else {
-//       alert("Registration failed");
-//     }
-//   };
 
 const handleRegister = async (e: React.FormEvent) => {
   e.preventDefault();
+   // ✅ Password validation before API call
+  if (password.length < 6) {
+    toast.error("Password must be at least 6 characters");
+    return;
+  }
   setLoading(true);
 
   const res = await fetch("/api/auth/register", {
@@ -42,15 +30,18 @@ const handleRegister = async (e: React.FormEvent) => {
     body: JSON.stringify({ name, email, password }),
   });
 
+  const data = await res.json(); // 🔥 IMPORTANT
+
   setLoading(false);
 
   if (res.ok) {
-    toast.success("Account created successfully 🎉");
+    toast.success(data.message || "Account created successfully 🎉");
     router.push("/login");
   } else {
-    toast.error("Registration failed");
+    toast.error(data.message || "Registration failed");
   }
 };
+
 
 
   return (

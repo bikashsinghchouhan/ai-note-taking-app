@@ -9,6 +9,9 @@
 html {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+html, body {
+  overflow-x: hidden;
+}
 
 /* Light theme */
 html {
@@ -159,7 +162,21 @@ body {
 
 
 
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 
+.animate-marquee {
+  display: inline-block;
+  min-width: 100%;
+  animation: marquee 18s linear infinite;
+}
+ 
 .input {
   @apply w-full rounded-lg border border-gray-300 px-4 py-2 text-sm
     focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200;
