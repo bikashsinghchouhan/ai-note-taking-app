@@ -17,6 +17,14 @@ export default function RegisterPage() {
 
 const handleRegister = async (e: React.FormEvent) => {
   e.preventDefault();
+    // 🔹 Email regex pattern
+  const emailPattern =
+    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  if (!emailPattern.test(email)) {
+    toast.error("Please enter a valid email address");
+    return;
+  }
    // ✅ Password validation before API call
   if (password.length < 6) {
     toast.error("Password must be at least 6 characters");
