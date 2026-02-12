@@ -101,7 +101,7 @@ const handleSubmit = async () => {
                 placeholder="Write your note..."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                rows={6}
+                rows={12}
                 className="w-full border rounded-lg px-4 py-2"
             />
 

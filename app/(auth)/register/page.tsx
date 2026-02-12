@@ -50,7 +50,7 @@ export default function RegisterPage() {
 
   return (
     <div className="w-full flex min-h-screen items-center justify-center 
-    bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 px-4">
+     px-4">
 
       <form
         onSubmit={handleRegister}
