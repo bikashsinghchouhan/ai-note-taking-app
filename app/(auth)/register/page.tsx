@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import toast from "react-hot-toast";
+
 export default function RegisterPage() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -13,81 +14,95 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
 
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-const handleRegister = async (e: React.FormEvent) => {
-  e.preventDefault();
-    // 🔹 Email regex pattern
-  const emailPattern =
-    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailPattern.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
 
-  if (!emailPattern.test(email)) {
-    toast.error("Please enter a valid email address");
-    return;
-  }
-   // ✅ Password validation before API call
-  if (password.length < 6) {
-    toast.error("Password must be at least 6 characters");
-    return;
-  }
-  setLoading(true);
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
 
-  const res = await fetch("/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password }),
-  });
+    setLoading(true);
 
-  const data = await res.json(); // 🔥 IMPORTANT
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
 
-  setLoading(false);
+    const data = await res.json();
+    setLoading(false);
 
-  if (res.ok) {
-    toast.success(data.message || "Account created successfully 🎉");
-    router.push("/login");
-  } else {
-    toast.error(data.message || "Registration failed");
-  }
-};
-
-
+    if (res.ok) {
+      toast.success(data.message || "Account created successfully 🎉");
+      router.push("/login");
+    } else {
+      toast.error(data.message || "Registration failed");
+    }
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+    <div className="w-full flex min-h-screen items-center justify-center 
+    bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 px-4">
+
       <form
         onSubmit={handleRegister}
-        className="w-full max-w-md rounded-2xl bg-white dark:bg-gray-900 p-8 shadow-lg"
+        className="w-full max-w-md rounded-2xl bg-white/90 
+        backdrop-blur-md p-8 shadow-2xl"
       >
-        <h2 className="mb-6 text-center text-2xl font-bold">
-          Create Account
+        <h2 className="mb-2 text-center text-3xl font-bold text-gray-800">
+          Create Account 
         </h2>
+        <p className="mb-6 text-center text-sm text-gray-500">
+          Join us and start your journey
+        </p>
 
         {/* Name */}
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="input mb-4"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+        <div className="relative mb-4">
+          <User size={18} className="absolute left-3 top-3 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="w-full rounded-lg border border-gray-300 
+            pl-10 pr-3 py-2.5 focus:outline-none 
+            focus:ring-2 focus:ring-indigo-500"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
 
         {/* Email */}
-        <input
-          type="email"
-          placeholder="Email"
-          className="input mb-4"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <div className="relative mb-4">
+          <Mail size={18} className="absolute left-3 top-3 text-gray-400" />
+          <input
+            type="email"
+            placeholder="Email address"
+            className="w-full rounded-lg border border-gray-300 
+            pl-10 pr-3 py-2.5 focus:outline-none 
+            focus:ring-2 focus:ring-indigo-500"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
         {/* Password */}
         <div className="relative mb-6">
+          <Lock size={18} className="absolute left-3 top-3 text-gray-400" />
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="input pr-10"
+            className="w-full rounded-lg border border-gray-300 
+            pl-10 pr-10 py-2.5 focus:outline-none 
+            focus:ring-2 focus:ring-indigo-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -95,25 +110,28 @@ const handleRegister = async (e: React.FormEvent) => {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-2.5 text-gray-500"
+            className="absolute right-3 top-3 text-gray-500"
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
 
-        {/* Button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-lg bg-indigo-600 py-2.5 text-white font-semibold hover:bg-indigo-700 transition"
+          className="w-full rounded-lg bg-indigo-600 py-2.5 
+          text-white font-semibold transition 
+          hover:bg-indigo-700 disabled:opacity-60"
         >
           {loading ? "Creating..." : "Sign Up"}
         </button>
 
-        {/* Login link */}
-        <p className="mt-4 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}
-          <Link href="/login" className="text-indigo-600 font-medium">
+          <Link
+            href="/login"
+            className="text-indigo-600 font-semibold hover:underline"
+          >
             Login
           </Link>
         </p>

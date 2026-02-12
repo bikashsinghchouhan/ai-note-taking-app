@@ -7,7 +7,7 @@ export default function HeroSection() {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen flex-col justify-between dark:bg-gray-900">
+    <div className="flex min-h-screen flex-col justify-between bg-slate-100  dark:bg-gray-900">
 
       {/* 🔹 Top Title Section (Header Position) */}
       <div className="w-full  border-b py-5">
