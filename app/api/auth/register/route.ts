@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 
     await connectDB();
 
-    // ✅ Check duplicate email
+    //  Check duplicate email
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import Link from "next/link";
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function RegisterPage() {
@@ -55,7 +55,7 @@ export default function RegisterPage() {
       <form
         onSubmit={handleRegister}
         className="w-full max-w-md rounded-2xl bg-white/90 
-        backdrop-blur-md p-8 shadow-2xl"
+        backdrop-blur-md p-8 shadow-2xl dark:text-gray-800"
       >
         <h2 className="mb-2 text-center text-3xl font-bold text-gray-800">
           Create Account 

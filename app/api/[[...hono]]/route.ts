@@ -14,21 +14,39 @@ app.get("/api/test", (c) => {
     return c.json({ message: "Hono is working 🚀" });
 });
 
+
+
+/* ===============================
+   CREATE NOTE
+================================ */
+app.post("/api/notes", async (c) => {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      return c.json({ message: "Unauthorized" }, 401);
+    }
+
+    await connectDB();
+
+    const { title, content } = await c.req.json();
+
+    const note = await Note.create({
+      title,
+      content,
+      userId: session.user.id, //  sending the userId
+    });
+
+    return c.json(note, 201);
+  } catch (error) {
+    return c.json({ message: "Failed to create note" }, 500);
+  }
+});
+
+
 /* ===============================
    GET ALL NOTES
 ================================ */
-// app.get("/api/notes", async (c) => {
-//   try {
-//     await connectDB();
-
-//     const notes = await Note.find().sort({ createdAt: -1 });
-
-//     return c.json(notes);
-//   } catch (error) {
-//     console.error("GET NOTES ERROR:", error);
-//     return c.json({ message: "Failed to fetch notes" }, 500);
-//   }
-// });
 app.get("/api/notes", async (c) => {
     try {
         const session = await getServerSession(authOptions);
@@ -50,61 +68,10 @@ app.get("/api/notes", async (c) => {
     }
 });
 
-
-/* ===============================
-   CREATE NOTE
-================================ */
-app.post("/api/notes", async (c) => {
-  try {
-    const session = await getServerSession(authOptions);
-
-    if (!session?.user?.id) {
-      return c.json({ message: "Unauthorized" }, 401);
-    }
-
-    await connectDB();
-
-    const { title, content } = await c.req.json();
-
-    const note = await Note.create({
-      title,
-      content,
-      userId: session.user.id, // 🔐 SAVE OWNER
-    });
-
-    return c.json(note, 201);
-  } catch (error) {
-    return c.json({ message: "Failed to create note" }, 500);
-  }
-});
-
 /* ===============================
    UPDATE NOTE
 ================================ */
-// app.put("/api/notes/:id", async (c) => {
-//   try {
-//     await connectDB();
 
-//     const id = c.req.param("id");
-//     const { title, content } = await c.req.json();
-
-//     const updated = await Note.findByIdAndUpdate(
-//       id,
-//       { title, content },
-//       { new: true }
-//     );
-
-//     if (!updated) {
-//       return c.json({ message: "Note not found" }, 404);
-//     }
-
-//     return c.json(updated);
-//   } catch (error) {
-//     console.error("UPDATE ERROR:", error);
-//     return c.json({ message: "Update failed" }, 500);
-//   }
-// }
-// );
 app.put("/api/notes/:id", async (c) => {
   try {
     const session = await getServerSession(authOptions);
